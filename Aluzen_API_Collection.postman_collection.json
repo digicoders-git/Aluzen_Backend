@@ -1,0 +1,489 @@
+{
+  "info": {
+    "name": "Aluzen API Collection",
+    "description": "Complete API collection for Aluzen Backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "BASE_URL",
+      "value": "http://localhost:3200",
+      "type": "string"
+    },
+    {
+      "key": "TOKEN",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Admin",
+      "item": [
+        {
+          "name": "Create Admin",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Admin User", "type": "text" },
+                { "key": "email", "value": "admin@aluzen.in", "type": "text" },
+                { "key": "password", "value": "admin123", "type": "text" },
+                { "key": "profilePhoto", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/admin/create", "host": ["{{BASE_URL}}"], "path": ["admin", "create"] }
+          }
+        },
+        {
+          "name": "Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const res = pm.response.json();",
+                  "if (res.token) pm.collectionVariables.set('TOKEN', res.token);"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@aluzen.in\",\n  \"password\": \"admin123\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/admin/login", "host": ["{{BASE_URL}}"], "path": ["admin", "login"] }
+          }
+        },
+        {
+          "name": "Get Admin",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/admin/get", "host": ["{{BASE_URL}}"], "path": ["admin", "get"] }
+          }
+        },
+        {
+          "name": "Update Admin Profile",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Updated Admin", "type": "text" },
+                { "key": "email", "value": "admin@aluzen.in", "type": "text" },
+                { "key": "currentPassword", "value": "admin123", "type": "text" },
+                { "key": "newPassword", "value": "newpass123", "type": "text" },
+                { "key": "profilePhoto", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/admin/update/:id", "host": ["{{BASE_URL}}"], "path": ["admin", "update", ":id"], "variable": [{ "key": "id", "value": "ADMIN_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Products",
+      "item": [
+        {
+          "name": "Get All Products",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/product/get", "host": ["{{BASE_URL}}"], "path": ["product", "get"] }
+          }
+        },
+        {
+          "name": "Add Product",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Premium Sliding Door", "type": "text" },
+                { "key": "category", "value": "Sliding Systems", "type": "text" },
+                { "key": "description", "value": "High-performance sliding system for large openings", "type": "text" },
+                { "key": "specs", "value": "[\"Heavy Duty Track\", \"Smooth Operation\", \"Weather Sealed\"]", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/product/add", "host": ["{{BASE_URL}}"], "path": ["product", "add"] }
+          }
+        },
+        {
+          "name": "Update Product",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "name", "value": "Updated Sliding Door", "type": "text" },
+                { "key": "category", "value": "Sliding Systems", "type": "text" },
+                { "key": "description", "value": "Updated description", "type": "text" },
+                { "key": "specs", "value": "[\"Heavy Duty Track\", \"Updated Spec\"]", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/product/update/:id", "host": ["{{BASE_URL}}"], "path": ["product", "update", ":id"], "variable": [{ "key": "id", "value": "PRODUCT_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Delete Product",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/product/delete/:id", "host": ["{{BASE_URL}}"], "path": ["product", "delete", ":id"], "variable": [{ "key": "id", "value": "PRODUCT_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Projects",
+      "item": [
+        {
+          "name": "Get All Projects",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/project/get", "host": ["{{BASE_URL}}"], "path": ["project", "get"] }
+          }
+        },
+        {
+          "name": "Add Project",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Modern Villa – Sliding Systems", "type": "text" },
+                { "key": "category", "value": "Residential", "type": "text" },
+                { "key": "type", "value": "Residential", "type": "text" },
+                { "key": "location", "value": "Mumbai", "type": "text" },
+                { "key": "description", "value": "Premium aluminium sliding systems installed in a modern villa", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/project/add", "host": ["{{BASE_URL}}"], "path": ["project", "add"] }
+          }
+        },
+        {
+          "name": "Update Project",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Updated Project Title", "type": "text" },
+                { "key": "category", "value": "Commercial", "type": "text" },
+                { "key": "type", "value": "Commercial", "type": "text" },
+                { "key": "location", "value": "Delhi", "type": "text" },
+                { "key": "description", "value": "Updated description", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/project/update/:id", "host": ["{{BASE_URL}}"], "path": ["project", "update", ":id"], "variable": [{ "key": "id", "value": "PROJECT_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Delete Project",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/project/delete/:id", "host": ["{{BASE_URL}}"], "path": ["project", "delete", ":id"], "variable": [{ "key": "id", "value": "PROJECT_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get All Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/category/get", "host": ["{{BASE_URL}}"], "path": ["category", "get"] }
+          }
+        },
+        {
+          "name": "Get Product Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/category/get?type=product", "host": ["{{BASE_URL}}"], "path": ["category", "get"], "query": [{ "key": "type", "value": "product" }] }
+          }
+        },
+        {
+          "name": "Get Project Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/category/get?type=project", "host": ["{{BASE_URL}}"], "path": ["category", "get"], "query": [{ "key": "type", "value": "project" }] }
+          }
+        },
+        {
+          "name": "Get Blog Categories",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/category/get?type=blog", "host": ["{{BASE_URL}}"], "path": ["category", "get"], "query": [{ "key": "type", "value": "blog" }] }
+          }
+        },
+        {
+          "name": "Add Category",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Sliding Systems\",\n  \"type\": \"product\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/category/add", "host": ["{{BASE_URL}}"], "path": ["category", "add"] }
+          }
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Updated Category Name\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/category/update/:id", "host": ["{{BASE_URL}}"], "path": ["category", "update", ":id"], "variable": [{ "key": "id", "value": "CATEGORY_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/category/delete/:id", "host": ["{{BASE_URL}}"], "path": ["category", "delete", ":id"], "variable": [{ "key": "id", "value": "CATEGORY_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Blogs",
+      "item": [
+        {
+          "name": "Get Published Blogs",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/blog/get", "host": ["{{BASE_URL}}"], "path": ["blog", "get"] }
+          }
+        },
+        {
+          "name": "Get All Blogs (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/blog/get?all=true", "host": ["{{BASE_URL}}"], "path": ["blog", "get"], "query": [{ "key": "all", "value": "true" }] }
+          }
+        },
+        {
+          "name": "Get Blog By ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": { "raw": "{{BASE_URL}}/blog/get/:id", "host": ["{{BASE_URL}}"], "path": ["blog", "get", ":id"], "variable": [{ "key": "id", "value": "BLOG_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Add Blog",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Why Aluminium Windows Are the Future", "type": "text" },
+                { "key": "excerpt", "value": "Aluminium windows offer unmatched strength and design flexibility.", "type": "text" },
+                { "key": "content", "value": "Full article content goes here...", "type": "text" },
+                { "key": "category", "value": "Architecture", "type": "text" },
+                { "key": "readTime", "value": "5 min read", "type": "text" },
+                { "key": "featured", "value": "true", "type": "text" },
+                { "key": "published", "value": "true", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/blog/add", "host": ["{{BASE_URL}}"], "path": ["blog", "add"] }
+          }
+        },
+        {
+          "name": "Update Blog",
+          "request": {
+            "method": "PUT",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "title", "value": "Updated Blog Title", "type": "text" },
+                { "key": "excerpt", "value": "Updated excerpt", "type": "text" },
+                { "key": "content", "value": "Updated content", "type": "text" },
+                { "key": "category", "value": "Products", "type": "text" },
+                { "key": "readTime", "value": "6 min read", "type": "text" },
+                { "key": "featured", "value": "false", "type": "text" },
+                { "key": "published", "value": "true", "type": "text" },
+                { "key": "image", "type": "file", "src": "" }
+              ]
+            },
+            "url": { "raw": "{{BASE_URL}}/blog/update/:id", "host": ["{{BASE_URL}}"], "path": ["blog", "update", ":id"], "variable": [{ "key": "id", "value": "BLOG_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Delete Blog",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/blog/delete/:id", "host": ["{{BASE_URL}}"], "path": ["blog", "delete", ":id"], "variable": [{ "key": "id", "value": "BLOG_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact (Enquiries)",
+      "item": [
+        {
+          "name": "Submit Contact (Public)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"John Doe\",\n  \"phone\": \"9876543210\",\n  \"email\": \"john@example.com\",\n  \"message\": \"I need aluminium sliding windows for my new home project.\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/contact/submit", "host": ["{{BASE_URL}}"], "path": ["contact", "submit"] }
+          }
+        },
+        {
+          "name": "Get All Contacts (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/contact/get", "host": ["{{BASE_URL}}"], "path": ["contact", "get"] }
+          }
+        },
+        {
+          "name": "Mark Contact As Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/contact/read/:id", "host": ["{{BASE_URL}}"], "path": ["contact", "read", ":id"], "variable": [{ "key": "id", "value": "CONTACT_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Mark Contact As Unread",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/contact/read/:id?unread=true", "host": ["{{BASE_URL}}"], "path": ["contact", "read", ":id"], "query": [{ "key": "unread", "value": "true" }], "variable": [{ "key": "id", "value": "CONTACT_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Mark All Contacts As Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/contact/read-all", "host": ["{{BASE_URL}}"], "path": ["contact", "read-all"] }
+          }
+        },
+        {
+          "name": "Delete Contact",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/contact/delete/:id", "host": ["{{BASE_URL}}"], "path": ["contact", "delete", ":id"], "variable": [{ "key": "id", "value": "CONTACT_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Quote Requests",
+      "item": [
+        {
+          "name": "Submit Quote (Public)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"fullName\": \"Jane Smith\",\n  \"phone\": \"9876543211\",\n  \"email\": \"jane@example.com\",\n  \"productCategory\": \"Sliding Systems\",\n  \"projectType\": \"Residential\",\n  \"projectDetails\": \"Need sliding windows for 3BHK apartment, approx 10 windows, location Pune.\"\n}"
+            },
+            "url": { "raw": "{{BASE_URL}}/quote/submit", "host": ["{{BASE_URL}}"], "path": ["quote", "submit"] }
+          }
+        },
+        {
+          "name": "Get All Quotes (Admin)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/quote/get", "host": ["{{BASE_URL}}"], "path": ["quote", "get"] }
+          }
+        },
+        {
+          "name": "Mark Quote As Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/quote/read/:id", "host": ["{{BASE_URL}}"], "path": ["quote", "read", ":id"], "variable": [{ "key": "id", "value": "QUOTE_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Mark Quote As Unread",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/quote/read/:id?unread=true", "host": ["{{BASE_URL}}"], "path": ["quote", "read", ":id"], "query": [{ "key": "unread", "value": "true" }], "variable": [{ "key": "id", "value": "QUOTE_ID_HERE" }] }
+          }
+        },
+        {
+          "name": "Mark All Quotes As Read",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/quote/read-all", "host": ["{{BASE_URL}}"], "path": ["quote", "read-all"] }
+          }
+        },
+        {
+          "name": "Delete Quote",
+          "request": {
+            "method": "DELETE",
+            "header": [{ "key": "Authorization", "value": "Bearer {{TOKEN}}" }],
+            "url": { "raw": "{{BASE_URL}}/quote/delete/:id", "host": ["{{BASE_URL}}"], "path": ["quote", "delete", ":id"], "variable": [{ "key": "id", "value": "QUOTE_ID_HERE" }] }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "SSE Stream (Real-time)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Accept", "value": "text/event-stream" }],
+            "url": { "raw": "{{BASE_URL}}/notifications/stream", "host": ["{{BASE_URL}}"], "path": ["notifications", "stream"] }
+          }
+        }
+      ]
+    }
+  ]
+}
