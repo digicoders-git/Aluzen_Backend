@@ -28,6 +28,7 @@ const allowedOrigins = [
   'http://localhost:3000',
   'https://aluzen-website-eta.vercel.app',
   'https://aluzen-admn-panel.vercel.app',
+  "admin.aluzen.in",
   process.env.FRONTEND_URL,
   process.env.ADMIN_URL,
 ].filter(Boolean);
